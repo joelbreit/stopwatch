@@ -6,9 +6,7 @@ import {
 	Flag,
 	Download,
 	Timer,
-	TrendingUp,
-	Zap,
-	Activity,
+	Check,
 } from "lucide-react";
 
 // Helper function to format time from milliseconds to MM:SS.ms
@@ -68,6 +66,25 @@ export default function App() {
 				totalTime: totalTimeAtLap,
 			};
 			setLaps([newLap, ...laps]); // Add new lap to the beginning
+		}
+	};
+
+	const handleCompleteLap = () => {
+		if (isActive || time > 0) {
+			const totalTimeAtLap = time;
+			const completedLapsDuration = laps.reduce(
+				(sum, lap) => sum + lap.duration,
+				0
+			);
+			const duration = totalTimeAtLap - completedLapsDuration;
+
+			const newLap = {
+				lap: laps.length + 1,
+				duration,
+				totalTime: totalTimeAtLap,
+			};
+			setLaps([newLap, ...laps]);
+			setIsActive(false);
 		}
 	};
 
@@ -217,31 +234,53 @@ export default function App() {
 				</div>
 
 				{/* Control Buttons */}
-				<div className="flex justify-between w-full mb-8">
-					<button
-						onClick={handleReset}
-						disabled={isActive || time === 0}
-						className="w-24 h-24 rounded-full flex items-center justify-center bg-gray-700 text-gray-300 disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
-					>
-						<RotateCcw />
-					</button>
-					<button
-						onClick={handleStartStop}
-						className={`w-24 h-24 rounded-full flex items-center justify-center text-lg font-semibold transition-colors ${
-							isActive
-								? "bg-red-900/50 text-red-400"
-								: "bg-green-900/50 text-green-400"
-						}`}
-					>
-						{isActive ? <Pause /> : <Play />}
-					</button>
-					<button
-						onClick={handleLap}
-						disabled={!isActive}
-						className="w-24 h-24 rounded-full flex items-center justify-center bg-gray-700 text-gray-300 disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
-					>
-						<Flag />
-					</button>
+				<div className="flex flex-col gap-4 w-full mb-8">
+					{/* Main Control Row */}
+					<div className="flex justify-between w-full">
+						<button
+							onClick={handleReset}
+							disabled={time === 0}
+							className="w-24 h-24 rounded-full flex items-center justify-center bg-gray-700 text-gray-300 disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
+						>
+							<RotateCcw />
+						</button>
+						<button
+							onClick={handleLap}
+							disabled={!isActive}
+							className="w-24 h-24 rounded-full flex items-center justify-center bg-orange-700 text-orange-200 disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
+						>
+							<Flag />
+						</button>
+						<button
+							onClick={handleStartStop}
+							className={`w-24 h-24 rounded-full flex items-center justify-center text-lg font-semibold transition-colors ${
+								isActive
+									? "bg-red-900/50 text-red-400"
+									: "bg-green-900/50 text-green-400"
+							}`}
+						>
+							{isActive ? <Pause /> : <Play />}
+						</button>
+
+						<button
+							onClick={handleCompleteLap}
+							disabled={time === 0}
+							className="w-24 h-24 rounded-full flex items-center justify-center bg-blue-700 text-blue-200 disabled:opacity-50 disabled:cursor-not-allowed transition-opacity font-medium"
+						>
+							<Check />
+						</button>
+					</div>
+					{/* Complete Lap Button Row */}
+					{/* <div className="flex justify-center w-full">
+						<button
+							onClick={handleCompleteLap}
+							disabled={time === 0}
+							className="w-48 h-16 rounded-full flex items-center justify-center bg-blue-700 text-blue-200 disabled:opacity-50 disabled:cursor-not-allowed transition-opacity font-medium"
+						>
+							<Square className="w-5 h-5 mr-2" />
+							Complete Lap
+						</button>
+					</div> */}
 				</div>
 
 				{/* Average Time Cards */}
@@ -283,7 +322,7 @@ export default function App() {
 							</thead>
 							<tbody>
 								{laps.length > 0 ? (
-									laps.map((lap, index) => (
+									laps.map((lap) => (
 										<tr
 											key={lap.lap}
 											className={`border-t border-gray-700 ${
