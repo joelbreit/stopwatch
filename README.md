@@ -10,6 +10,8 @@ This is hosted on [my website](https://stopwatch.joelbreit.com)
 
 This is a **React web app** using **Tailwind v4** for styling and **lucide-react** for icons set up with **Vite** and **JavaScript** for quick development.
 
+Hosted on AWS with Amplify.
+
 ## Run this Project on Your Own
 
 1. Clone this repository
