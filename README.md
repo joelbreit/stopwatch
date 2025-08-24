@@ -2,6 +2,10 @@
 
 It's a stopwatch app. What more do you want? Is displays your fastest/slowest lap and keeps track of average lap time (for completed laps and live including the active app).
 
+This is hosted on [my website](https://stopwatch.joelbreit.com)
+
+![Demo](./docs/demo.gif)
+
 ## Technology
 
 This is a **React web app** using **Tailwind v4** for styling and **lucide-react** for icons set up with **Vite** and **JavaScript** for quick development.
