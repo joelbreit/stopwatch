@@ -43,7 +43,6 @@ export default function App() {
 		return () => clearInterval(intervalRef.current);
 	}, [isActive, time]);
 
-	// Handlers for stopwatch controls
 	const handleStartStop = () => {
 		setIsActive(!isActive);
 	};
@@ -71,6 +70,17 @@ export default function App() {
 			setLaps([newLap, ...laps]); // Add new lap to the beginning
 		}
 	};
+
+	const currentLapTime = useMemo(() => {
+		if (laps.length === 0) {
+			return time;
+		}
+		const completedLapsDuration = laps.reduce(
+			(sum, lap) => sum + lap.duration,
+			0
+		);
+		return time - completedLapsDuration;
+	}, [time, laps]);
 
 	// Memoized calculations for average times
 	const { averageSoFar, overallAverage } = useMemo(() => {
@@ -197,9 +207,13 @@ export default function App() {
 						</button>
 					)}
 				</div>
-				{/* Main Timer Display */}
-				<div className="text-7xl md:text-8xl font-mono tracking-tighter mb-8 w-full text-center">
-					{formatTime(time)}
+				{/* Main Timer Display - Current Lap Time */}
+				<div className="text-7xl md:text-8xl font-mono tracking-tighter mb-2 w-full text-center">
+					{formatTime(currentLapTime)}
+				</div>
+				{/* Secondary Display - Total Time */}
+				<div className="text-lg font-mono text-gray-400 mb-8 w-full text-center">
+					Total: {formatTime(time)}
 				</div>
 
 				{/* Control Buttons */}
