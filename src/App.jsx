@@ -240,34 +240,38 @@ export default function App() {
 						<button
 							onClick={handleReset}
 							disabled={time === 0}
-							className="w-24 h-24 rounded-full flex items-center justify-center bg-gray-700 text-gray-300 disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
+							className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full flex items-center justify-center bg-gray-700 text-gray-300 disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
 						>
-							<RotateCcw />
+							<RotateCcw className="w-5 h-5 sm:w-6 sm:h-6" />
 						</button>
 						<button
 							onClick={handleLap}
 							disabled={!isActive}
-							className="w-24 h-24 rounded-full flex items-center justify-center bg-orange-700 text-orange-200 disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
+							className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full flex items-center justify-center bg-orange-700 text-orange-200 disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
 						>
-							<Flag />
+							<Flag className="w-5 h-5 sm:w-6 sm:h-6" />
 						</button>
 						<button
 							onClick={handleStartStop}
-							className={`w-24 h-24 rounded-full flex items-center justify-center text-lg font-semibold transition-colors ${
+							className={`w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full flex items-center justify-center text-lg font-semibold transition-colors ${
 								isActive
 									? "bg-red-900/50 text-red-400"
 									: "bg-green-900/50 text-green-400"
 							}`}
 						>
-							{isActive ? <Pause /> : <Play />}
+							{isActive ? (
+								<Pause className="w-5 h-5 sm:w-6 sm:h-6" />
+							) : (
+								<Play className="w-5 h-5 sm:w-6 sm:h-6" />
+							)}
 						</button>
 
 						<button
 							onClick={handleCompleteLap}
 							disabled={time === 0}
-							className="w-24 h-24 rounded-full flex items-center justify-center bg-blue-700 text-blue-200 disabled:opacity-50 disabled:cursor-not-allowed transition-opacity font-medium"
+							className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full flex items-center justify-center bg-blue-700 text-blue-200 disabled:opacity-50 disabled:cursor-not-allowed transition-opacity font-medium"
 						>
-							<Check />
+							<Check className="w-5 h-5 sm:w-6 sm:h-6" />
 						</button>
 					</div>
 					{/* Complete Lap Button Row */}
