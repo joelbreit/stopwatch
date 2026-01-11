@@ -1,3 +1,8 @@
+# Capacitor
+android/
+ios/
+.capacitor/
+
 # Logs
 logs
 *.log
